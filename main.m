@@ -1,3 +1,4 @@
+%%
 clc, 
 close all, 
 clear all,
@@ -29,23 +30,30 @@ h4=ceil(abs(r4(4)-r4(2))/8);
 r5=floor((b-a).*rand(1,4) + a);
 w5=ceil(abs(r5(3)-r5(1))/8);
 h5=ceil(abs(r5(4)-r5(2))/8);
-
+%%
 disp('Regionlet Based Object Detection');
 disp('Calculating HOG for positive samples.......');
-dirData = dir('./s_pos/*.png');      
+commonDir = '../CSC2541-AutoDriving/Project/data-kaist-thermal-original/train-all20';
+dirData = dir([commonDir '/images/*.png']);      
 fileNames = {dirData.name};
 n=numel(fileNames);
+iCrop = 0;
 for iFile = 1:n
     [pathstr,name,ext] = fileparts(fileNames{iFile});
     image=fileNames{iFile};
-    ann=dir(strcat('./annotations','/',name,'.txt'));
+    ann=dir(strcat(commonDir, '/annotations','/',name,'.txt'));
     ann_temp={ann.name};
     [pathstr,ann_file,ext] = fileparts(ann_temp{1});
-    ann_file=strcat('./annotations/',ann_file,ext);
-    ann_file;
+    %ann_file=strcat('./annotations/',ann_file,ext);
+    %ann_file;
+    img_file = [commonDir, '/images','/',name,'.png'];
+    ann_file = [commonDir, '/annotations','/',name,'.txt'];
     annotation;
 end
 disp('HOG for positive data complete.....');
+%%
 negative_hog;
+%%
 trainer;
+%%
 classify;
